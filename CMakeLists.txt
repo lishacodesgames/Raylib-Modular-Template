@@ -14,4 +14,5 @@ set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 # go to cmakelists in subdirectories
 add_subdirectory(lib/raylib)
 add_subdirectory(lib/GUI)
+add_subdirectory(lib/Layers)
 add_subdirectory(App)

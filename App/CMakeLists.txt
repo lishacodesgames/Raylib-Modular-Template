@@ -5,9 +5,9 @@ target_sources(${PROJECT_NAME} PRIVATE
    src/main.cpp
 )
 
-target_precompile_headers( ${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/lib/pch/Precompiled.h )
+target_link_libraries(${PROJECT_NAME} PRIVATE GUI Layers raylib)
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/lib/pch include)
-target_link_libraries(${PROJECT_NAME} PRIVATE GUI) # raylib is automatically linked in GUI
+target_precompile_headers( ${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/lib/pch/Precompiled.h )
 
 # turn on warnings for better debugging
 # (but not for MSVC, which has different warning flags)
