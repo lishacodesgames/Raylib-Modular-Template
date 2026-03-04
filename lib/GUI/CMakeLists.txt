@@ -4,7 +4,8 @@ target_sources(GUI PRIVATE
    src/Button.cpp 
 )
 
-target_include_directories(GUI PUBLIC include)
+target_precompile_headers(GUI PRIVATE ${CMAKE_SOURCE_DIR}/lib/Precompiled.h)
+target_include_directories(GUI PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_link_libraries(GUI PUBLIC raylib)
 
 # silence raylib warnings
