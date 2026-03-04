@@ -1,5 +1,6 @@
 add_library(Layers STATIC)
 target_sources(Layers PRIVATE
+   src/Event.cpp
    src/Layer.cpp
    src/LayerStack.cpp   
 )
