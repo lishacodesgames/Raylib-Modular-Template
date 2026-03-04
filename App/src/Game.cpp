@@ -8,6 +8,12 @@ void Game::Init() {
 
    InitWindow(screenWidth, screenHeight, "Raylib Template");
    SetTargetFPS(60);
+
+   // TODO gonna move this part to MenuLayer once implemented
+   Image bg = LoadImage("assets/background.jpg");
+   ImageResize(&bg, screenWidth, screenHeight);
+   background = LoadTextureFromImage(bg);
+   UnloadImage(bg);
 }
 
 void Game::Run() {
@@ -16,7 +22,10 @@ void Game::Run() {
       
       BeginDrawing();
       ClearBackground(RAYWHITE);
+      DrawTexture(background, 0, 0, Color{240, 240, 240, 100}); // translucent background image
+
       Draw();
+
       EndDrawing();
    }
 
