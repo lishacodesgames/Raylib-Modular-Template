@@ -33,13 +33,13 @@ void Game::Run() {
 }
 
 void Game::HandleEvents() {
-   if(IsKeyDown(KEY_RIGHT))
+   if(IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D))
       x += 4;
-   if(IsKeyDown(KEY_LEFT))
+   if(IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A))
       x -= 4;
-   if(IsKeyDown(KEY_UP))
+   if(IsKeyDown(KEY_UP) || IsKeyDown(KEY_W))
       y -= 4;
-   if(IsKeyDown(KEY_DOWN))
+   if(IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S))
       y += 4;
 }
 
