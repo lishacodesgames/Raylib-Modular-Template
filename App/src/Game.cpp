@@ -2,47 +2,75 @@
 #include <raylib.h>
 #include "Game.h"
 
-void Game::Init() {
-   constexpr int screenWidth = 800;
-   constexpr int screenHeight = 600;
+Game::Game() {
+   s_instance = this;
 
-   InitWindow(screenWidth, screenHeight, "Raylib Template");
+   InitWindow(800, 600, "Architectured Raylib Template");
    SetTargetFPS(60);
+}
 
-   // TODO gonna move this part to MenuLayer once implemented
-   Image bg = LoadImage("assets/background.jpg");
-   ImageResize(&bg, screenWidth, screenHeight);
-   background = LoadTextureFromImage(bg);
-   UnloadImage(bg);
+Game::~Game() { CloseWindow(); }
+
+Game& Game::Get() { return *s_instance; }
+
+void Game::PushLayer(Layer* layer) { m_layerStack.PushLayer(layer); }
+
+void Game::QueueLayerSwap(Layer* pop_layer, Layer* push_layer) {
+   m_pendingPop = pop_layer;
+   m_pendingPush = push_layer;
+}
+
+void Game::OnEvent(Event& e) {
+   // TOPMOST (last) layer must get the event FIRST
+   for(auto it = m_layerStack.rbegin(); it != m_layerStack.rend(); ++it) {
+      (*it)->OnEvent(e);
+      if(e.Handled) 
+         break; // stop propagating if event was handled
+   }
 }
 
 void Game::Run() {
    while(!WindowShouldClose()) {
-      HandleEvents();
+      // 1. apply pending layer changes at the end of the current frame, to avoid mid-frame changes that could cause bugs
+      if(m_pendingPop) {
+         m_layerStack.PopLayer(m_pendingPop);
+         delete m_pendingPop; // free memory of popped layer
+         m_pendingPop = nullptr;
+      }
+      if(m_pendingPush) {
+         m_layerStack.PushLayer(m_pendingPush);
+         delete m_pendingPush; // free memory of pushed layer, since the layerstack now has its own copy
+         m_pendingPush = nullptr;
+      }
+
+      // 2. generate events
       
+      // key event
+      int key = GetKeyPressed();
+      while(key != 0) {
+         KeyPressedEvent e(key);
+         OnEvent(e);
+         key = GetKeyPressed();
+      }
+
+      // mouse event
+      if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+         MouseClickedEvent e(MOUSE_LEFT_BUTTON);
+         OnEvent(e);
+      }
+
+      // 3. update logic: bottom layer -> top layer, so that top layers can override logic of lower layers 
+      // (eg. pause menu can override gameplay input)
+      for(Layer* layer : m_layerStack)
+         layer->OnUpdate();
+      
+      // 4. render: bottom layer -> top layer, so that top layers render on top of lower layers
       BeginDrawing();
       ClearBackground(RAYWHITE);
-      DrawTexture(background, 0, 0, Color{240, 240, 240, 100}); // translucent background image
 
-      Draw();
+      for(Layer* layer : m_layerStack)
+         layer->OnRender();
 
       EndDrawing();
    }
-
-   CloseWindow();
-}
-
-void Game::HandleEvents() {
-   if(IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D))
-      x += 4;
-   if(IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A))
-      x -= 4;
-   if(IsKeyDown(KEY_UP) || IsKeyDown(KEY_W))
-      y -= 4;
-   if(IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S))
-      y += 4;
-}
-
-void Game::Draw() {
-   DrawCircle(x, y, 25, PINK);
 }
