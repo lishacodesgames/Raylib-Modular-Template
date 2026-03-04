@@ -1,6 +1,8 @@
 #include <Precompiled.h>
 #include <cstdio>
+#include "Game.h"
 #include "GameLayer.h"
+#include "MenuLayer.h"
 #include "Layer.h"
 
 GameLayer::GameLayer() : Layer("GameLayer") {}
@@ -23,10 +25,17 @@ void GameLayer::OnUpdate() {
 void GameLayer::OnEvent(Event& e) {
    if(e.GetEventType() == EventType::KeyPressed) {
       char key = static_cast<KeyPressedEvent&>(e).key;
-      printf("Key Pressed: %c\n", key);
+      if(key == 'q' || key == 'Q') {
+         Game::Get().QueueLayerSwap(this, new MenuLayer());
+         e.Handled = true;
+      }
    }
 }
 
 void GameLayer::OnRender() {
+   DrawText("GAME", GetScreenWidth() / 2 - 100, 50, 55, DARKBLUE);
+   DrawText("Move circle with WASD or arrows", GetScreenWidth() / 2 - 250, 120, 30, DARKGRAY);
+   DrawText("Press Q to return to menu", GetScreenWidth() / 2 - 120, 150, 20, GRAY);
+
    DrawCircle(x, y, 25, PINK);
 }

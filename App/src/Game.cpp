@@ -1,12 +1,16 @@
 #include <Precompiled.h>
 #include <raylib.h>
 #include "Game.h"
+#include "MenuLayer.h"
 
+Game* Game::s_instance = nullptr; // assign memory before assigning "this" ptr to it
 Game::Game() {
    s_instance = this;
 
    InitWindow(800, 600, "Architectured Raylib Template");
    SetTargetFPS(60);
+
+   PushLayer(new MenuLayer());
 }
 
 Game::~Game() { CloseWindow(); }
@@ -39,7 +43,6 @@ void Game::Run() {
       }
       if(m_pendingPush) {
          m_layerStack.PushLayer(m_pendingPush);
-         delete m_pendingPush; // free memory of pushed layer, since the layerstack now has its own copy
          m_pendingPush = nullptr;
       }
 
@@ -66,7 +69,7 @@ void Game::Run() {
       
       // 4. render: bottom layer -> top layer, so that top layers render on top of lower layers
       BeginDrawing();
-      ClearBackground(RAYWHITE);
+      ClearBackground(Color{213, 255, 255, 255});
 
       for(Layer* layer : m_layerStack)
          layer->OnRender();

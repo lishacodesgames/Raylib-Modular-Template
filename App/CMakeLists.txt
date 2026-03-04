@@ -4,6 +4,7 @@ target_sources(${PROJECT_NAME} PRIVATE
    src/Game.cpp
    src/GameLayer.cpp
    src/main.cpp
+   src/MenuLayer.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE GUI Layers raylib)

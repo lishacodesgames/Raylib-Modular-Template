@@ -24,7 +24,7 @@ void LayerStack::PushOverlay(Layer* overlay) {
 
 void LayerStack::PopLayer(Layer* layer) {
    std::vector<Layer*>::iterator it = 
-      std::find(begin() + m_layerInsertIndex, end(), layer);
+      std::find(begin(), end(), layer);
 
    if(it != end()) {
       layer->OnDetach();
