@@ -10,6 +10,9 @@
 #include <array>
 #include <unordered_map>
 
+// ---- STD INT ----
+#include <cstdint>
+
 // ---- LOGGING ----
 #include <iostream>
 #include <cstdio>
