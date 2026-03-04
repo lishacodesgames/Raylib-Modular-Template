@@ -10,6 +10,7 @@ public:
 private: // members
    int x = 400;
    int y = 300;
+
 private: // methods
    void HandleEvents();
    void Draw();
