@@ -1,4 +1,4 @@
-# Raylib-Template
+# Raylib Modular Template
 Modular game template using raylib as a git submodule and CMake. <br>
 This repository is intended to be used as a starting point for a new raylib project.
 
