@@ -1,5 +1,5 @@
 #include <Precompiled.h>
-#include "Button.h"
+#include <Button.h>
 
 Button::Button(Rectangle exactBounds, const char* text, Color buttonColor,Color textColor) 
    : m_bounds(exactBounds), text(text), buttonColor(buttonColor), textColor(textColor)

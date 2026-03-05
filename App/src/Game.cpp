@@ -1,6 +1,7 @@
 #include <Precompiled.h>
-#include <raylib.h>
 #include "Game.h"
+
+#include <raylib.h>
 #include "MenuLayer.h"
 
 Game* Game::s_instance = nullptr; // assign memory before assigning "this" ptr to it

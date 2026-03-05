@@ -1,8 +1,9 @@
 #include <Precompiled.h>
+#include <LayerStack.h>
+
 #include <algorithm>
+#include <Layer.h>
 #include <vector>
-#include "LayerStack.h"
-#include "Layer.h"
 
 LayerStack::~LayerStack() {
    for(int i = 0; i < m_Layers.size(); i++) {

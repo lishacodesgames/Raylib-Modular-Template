@@ -1,11 +1,13 @@
 add_library(GUI STATIC)
 target_sources(GUI PRIVATE
-   # list .cpp files here as they are added
    src/Button.cpp 
 )
 
 target_link_libraries(GUI PUBLIC raylib)
-target_include_directories(GUI PUBLIC ${CMAKE_SOURCE_DIR}/lib/pch include)
+target_include_directories(GUI PUBLIC 
+   ${CMAKE_SOURCE_DIR}/lib/pch 
+   ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
 target_precompile_headers(GUI PRIVATE ${CMAKE_SOURCE_DIR}/lib/pch/Precompiled.h)
 
 # silence raylib warnings

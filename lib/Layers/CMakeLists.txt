@@ -6,5 +6,8 @@ target_sources(Layers PRIVATE
 )
 
 target_link_libraries(Layers PUBLIC raylib)
-target_include_directories(Layers PUBLIC ${CMAKE_SOURCE_DIR}/lib/pch include)
+target_include_directories(Layers PUBLIC 
+   ${CMAKE_SOURCE_DIR}/lib/pch 
+   ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
 target_precompile_headers(Layers PRIVATE ${CMAKE_SOURCE_DIR}/lib/pch/Precompiled.h)

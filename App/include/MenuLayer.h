@@ -1,7 +1,7 @@
 #pragma once
 #include <raylib.h>
-#include "Layer.h"
-#include "Button.h"
+#include <Button.h>
+#include <Layer.h>
 
 class MenuLayer : public Layer {
 public:

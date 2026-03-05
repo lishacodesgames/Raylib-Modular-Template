@@ -5,6 +5,9 @@
 
 // CMAKE DOES THE PRECOMPILATION FOR US
 
+// NEVER include Precompiled headers in header files. 
+// Only in cpp, at the VERY TOP of everything else.
+
 // ---- STL ----
 #include <vector>
 #include <array>

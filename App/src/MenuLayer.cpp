@@ -1,7 +1,8 @@
 #include <Precompiled.h>
+#include "MenuLayer.h"
+
 #include <raylib.h>
 #include <cstdio>
-#include "MenuLayer.h"
 #include "GameLayer.h"
 #include "Game.h"
 

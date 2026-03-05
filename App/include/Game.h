@@ -1,10 +1,8 @@
 #pragma once
-// NEVER include Precompiled headers in header files. 
-// Only in cpp, at the very top of everything else.
+#include <LayerStack.h>
 #include <raylib.h>
-#include "LayerStack.h"
-#include "Layer.h"
-#include "Event.h"
+#include <Layer.h>
+#include <Event.h>
 
 /// Singleton class that manages the game loop and all game states (menu, gameplay, pause, etc.) 
 class Game {
