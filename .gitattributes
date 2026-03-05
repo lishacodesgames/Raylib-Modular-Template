@@ -1,3 +1,5 @@
 * text=auto eol=lf
+lib/raylib/* linguist-vendored
+
 **/*.h linguist-vendored
 **/*.c linguist-vendored
