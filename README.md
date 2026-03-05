@@ -5,6 +5,8 @@ This repository is intended to be used as a starting point for a new raylib proj
 This library-based system is for those who want a distinct separation between the core app, external libraries, and gui code. <br>
 This can be used as-is (like I do) or any subdirectories can be added or removed as needed
 
+*I also have a simpler, non-lib-based, template: ![check it out](https://github.com/lishacodesgames/Raylib-Template)*
+
 ## How to Clone
 `git clone --recursive` to get the raylib submodule local
 <br>
