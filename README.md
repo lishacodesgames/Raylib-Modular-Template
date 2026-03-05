@@ -1,16 +1,9 @@
 # Raylib-Template
-Minimal game template using raylib as a git submodule and CMake. <br>
+Modular game template using raylib as a git submodule and CMake. <br>
 This repository is intended to be used as a starting point for a new raylib project.
-<br>
-This template has 2 branches. *main* and *app-gui*
-<br>
 
-**main:** a simple template without any major subdirectories <br>
-
-**app-lib-gui:** for those who want a distinct separation between the core app, external libraries, and gui code. <br>
-This can be used as-is (like I do) or any subdirectories can be added or removed as needed.
-
-Respective README's will tell you more about the **process**
+This library-based system is for those who want a distinct separation between the core app, external libraries, and gui code. <br>
+This can be used as-is (like I do) or any subdirectories can be added or removed as needed
 
 ## How to Clone
 `git clone --recursive` to get the raylib submodule local
@@ -21,17 +14,22 @@ Respective README's will tell you more about the **process**
 
 ## Project Structure
 What your project architecture should ideally look like for the CMakeLists.txt I've included (Can change accordingly, otherwise)
-```bash
+```
 ‖
-‖——include/
-‖  ‖——*.h or *.hpp → all *your* header files
-‖——src/
-‖  ‖——main.cpp
-‖  ‖——*.cpp  → all other source files
-‖——raylib/   → your raylib engine (submodule)
 ‖——.git*
 ‖——CMakeLists.txt
 ‖——CMakePresets.json
+‖——App/
+‖  ‖——CMakeLists.txt
+‖  ‖——include/
+‖  ‖  ‖——*.h or *.hpp → all *your* header files
+‖  ‖——src/
+‖  ‖  ‖——main.cpp
+‖  ‖  ‖——*.c or *.cpp → all *your* source files
+‖——lib/
+‖  ‖——raylib/   → raylib submodule
+‖  ‖——GUI/      → raylib GUI stuff that's not native to your app
+‖  ‖——Layers/   → Layering system similar to the Hazel Game engine (wayyy simpler, but a good starting point for transitions)
 ```
 ## Build
 `mkdir build`
@@ -63,7 +61,7 @@ sudo apt install \
 
 ## Add New Source Files
 Put any new `.cpp` or `.c` files in `src/` <br>
-Update CMakeLists.txt as needed, example:
+Update App/CMakeLists.txt as needed, example:
 ```cmake
 add_executable(YourProjectName
   src/main.cpp
@@ -71,12 +69,15 @@ add_executable(YourProjectName
 )
 ```
 
+**Note:** I've made it so that you don't need to touch any CMakeLists.txt other than App/ as you will add your source files there. <br>
+If any issues arise, lmk :)
+
 ## Updating raylib (the submodule)
 ```bash
-cd raylib
+cd lib/raylib
 git pull
-cd ..
-git add raylib
+cd ../..
+git add lib/raylib
 git commit -m "Updated raylib submodule"
 ```
 
