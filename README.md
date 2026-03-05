@@ -34,16 +34,6 @@ What your project architecture should ideally look like for the CMakeLists.txt I
 ‖  ‖——Layers/   → Layering system similar to the Hazel Game engine (wayyy simpler, but a good starting point for transitions)
 ```
 
-Note: if you are using C, the repository might show C++ because I've excluded C in .gitattributes. <br>
-Just remove this from `.gitattrbites`
-
-```
-**/*.h linguist-vendored
-**/*.c linguist-vendored
-```
-
-Now your repository will show C
-
 ## Build
 `mkdir build`
 `cd build` <br>
