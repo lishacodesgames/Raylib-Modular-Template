@@ -11,10 +11,7 @@ MenuLayer::MenuLayer() : Layer("MenuLayer") {
    m_backgroundTexture = LoadTextureFromImage(bg);
    UnloadImage(bg);
 
-   m_startButton.bounds = { 320, 250, 200, 50 };
-   m_startButton.buttonColor = PINK;
-   m_startButton.text = "Start the Game";
-   m_startButton.textColor = BLACK;
+   m_startButton = Button({ 320, 250 }, { 22, 14 }, "Start the Game", 22, PINK, DARKGRAY);
 }
 
 MenuLayer::~MenuLayer() {
