@@ -23,6 +23,7 @@ MenuLayer::~MenuLayer() {
 }
 
 void MenuLayer::OnAttach() {
+   SetMouseCursor(MOUSE_CURSOR_DEFAULT);
    printf("Menu Layer attached\n");
 }
 

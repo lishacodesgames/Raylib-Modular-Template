@@ -4,11 +4,11 @@
 
 class Layer {
 public:
-   Layer(const std::string& name);
-   virtual ~Layer() = default;
+   Layer(const std::string& name); /// called when new layer pointer made with "new"
+   virtual ~Layer() = default; /// called with "delete" keyword
 
-   virtual void OnAttach() = 0;
-   virtual void OnDetach() = 0;
+   virtual void OnAttach() = 0; /// called when layer is actually pushed onto layer stack
+   virtual void OnDetach() = 0; /// called when layer is actually popped from layer stack
    virtual void OnUpdate() = 0; /// called every frame (key hold)
    virtual void OnEvent(Event &e) = 0; /// check-once event (key press)
    virtual void OnRender() = 0;
