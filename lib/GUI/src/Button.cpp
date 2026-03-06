@@ -74,23 +74,23 @@ bool Button::isClicked() const {
 }
 
 void Button::setFocus(bool isFocused, Color buttonColor, Color textColor) {
-  this->isFocused = isFocused;
-  this->buttonColor = buttonColor;
-  this->textColor = textColor;
+   this->isFocused = isFocused;
+   this->buttonColor = buttonColor;
+   this->textColor = textColor;
 }
 
 void Button::Update() {
   // update hover flag
-  if (CheckCollisionPointRec(GetMousePosition(), m_bounds))
-    isHovered = true;
-  else
-    isHovered = false;
+   if (CheckCollisionPointRec(GetMousePosition(), m_bounds))
+      isHovered = true;
+   else
+      isHovered = false;
 
   // update active flag
-  if (IsMouseButtonDown(MOUSE_LEFT_BUTTON) && isHovered)
-    isActive = true;
-  else
-    isActive = false;
+   if (IsMouseButtonDown(MOUSE_LEFT_BUTTON) && isHovered)
+      isActive = true;
+   else
+      isActive = false;
 }
 
 void Button::Draw() {
