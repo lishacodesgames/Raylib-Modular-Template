@@ -70,10 +70,7 @@ Button::Button
 }
 
 bool Button::isClicked() const {
-   if (IsMouseButtonDown(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(GetMousePosition(), m_bounds))
-    return true;
-  else
-    return false;
+   return (IsMouseButtonDown(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(GetMousePosition(), m_bounds));
 }
 
 void Button::setFocus(bool isFocused, Color buttonColor, Color textColor) {
