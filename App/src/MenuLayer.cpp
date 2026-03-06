@@ -8,15 +8,18 @@
 
 MenuLayer::MenuLayer() : Layer("MenuLayer") {
    Image bg = LoadImage("assets/background.jpg");
-   ImageResize(&bg, GetScreenWidth(), GetScreenHeight());
-   m_backgroundTexture = LoadTextureFromImage(bg);
-   UnloadImage(bg);
+   if(bg.data != nullptr) {
+      ImageResize(&bg, GetScreenWidth(), GetScreenHeight());
+      m_backgroundTexture = LoadTextureFromImage(bg);
+      UnloadImage(bg);
+   }
 
    m_startButton = Button({ 320, 250 }, { 22, 14 }, "Start the Game", 22, PINK, DARKGRAY);
 }
 
 MenuLayer::~MenuLayer() {
-   UnloadTexture(m_backgroundTexture);
+   if(IsTextureValid(m_backgroundTexture))
+      UnloadTexture(m_backgroundTexture);
 }
 
 void MenuLayer::OnAttach() {
@@ -28,10 +31,13 @@ void MenuLayer::OnDetach() {
 }
 
 void MenuLayer::OnUpdate() {
-   if(m_startButton.isHovering()) {
+   m_startButton.Update();
+
+   if(m_startButton.isHovered) {
       SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
    }
-   else SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+   else 
+      SetMouseCursor(MOUSE_CURSOR_DEFAULT);
 }
 
 void MenuLayer::OnEvent(Event &e) {

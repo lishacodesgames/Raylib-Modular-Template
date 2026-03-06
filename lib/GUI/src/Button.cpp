@@ -8,8 +8,9 @@ Button::Button(Rectangle exactBounds, const char* text, Color buttonColor,Color 
 {
    origin = { m_bounds.x, m_bounds.y };
 
-   float x = m_bounds.width / 2 - MeasureTextEx(GetFontDefault(), text, 20, 1).x / 2;
-   float y = m_bounds.height / 2 - MeasureTextEx(GetFontDefault(), text, 20, 1).y / 2;
+   Vector2 textSize = MeasureTextEx(GetFontDefault(), text, 20, 1);
+   float x = m_bounds.width / 2 - textSize.x / 2;
+   float y = m_bounds.height / 2 - textSize.y / 2;
 
    m_horizontalPadding = { x, x };
    m_verticalPadding = { y,  y };
@@ -68,10 +69,17 @@ Button::Button
    m_bounds.height = MeasureTextEx(GetFontDefault(), text, fontSize, 1).y + paddingTop + paddingBottom;
 }
 
+bool Button::isClicked() const {
+   if (IsMouseButtonDown(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(GetMousePosition(), m_bounds))
+    return true;
+  else
+    return false;
+}
+
 void Button::setFocus(bool isFocused, Color buttonColor, Color textColor) {
-   this->isFocused = isFocused;
-   this->buttonColor = buttonColor;
-   this->textColor = textColor;
+  this->isFocused = isFocused;
+  this->buttonColor = buttonColor;
+  this->textColor = textColor;
 }
 
 void Button::Update() {
@@ -82,7 +90,7 @@ void Button::Update() {
     isHovered = false;
 
   // update active flag
-  if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && isHovered)
+  if (IsMouseButtonDown(MOUSE_LEFT_BUTTON) && isHovered)
     isActive = true;
   else
     isActive = false;
@@ -96,12 +104,12 @@ void Button::Draw() {
       DrawRectangleRounded(m_bounds, 0.8f, 10, buttonColor);
 
    // make padding left be only on left and right only on right etc
-   Vector2 textSize = MeasureTextEx(GetFontDefault(), text, fontSize, 1);
+   Vector2 textSize = MeasureTextEx(GetFontDefault(), text.c_str(), fontSize, 1);
    Vector2 textOrigin;
    textOrigin.x = m_bounds.x + m_horizontalPadding.x + (m_bounds.width - m_horizontalPadding.x - m_horizontalPadding.y - textSize.x) / 2;
    textOrigin.y = m_bounds.y + m_verticalPadding.x + (m_bounds.height - m_verticalPadding.x -   m_verticalPadding.y - textSize.y) / 2;
 
-  DrawTextEx(GetFontDefault(), text, textOrigin, fontSize, 1, textColor);
+  DrawTextEx(GetFontDefault(), text.c_str(), textOrigin, fontSize, 1, textColor);
 }
 
 bool operator==(const Button& first, const Button& second) {
