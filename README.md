@@ -9,7 +9,6 @@ This can be used as-is (like I do) or any subdirectories can be added or removed
 
 ## How to Clone
 `git clone --recursive` to get the raylib submodule local
-<br>
 
 **If you forgot, do:** <br>
 `git submodule update --init --recursive` after regular `git clone`
@@ -24,10 +23,10 @@ What your project architecture should ideally look like for the CMakeLists.txt I
 ‖——App/
 ‖  ‖——CMakeLists.txt
 ‖  ‖——include/
-‖  ‖  ‖——*.h or *.hpp → all *your* header files
+‖  ‖  ‖——*.h → all *your* header files
 ‖  ‖——src/
 ‖  ‖  ‖——main.cpp
-‖  ‖  ‖——*.c or *.cpp → all *your* source files
+‖  ‖  ‖——*.cpp → all *your* source files
 ‖——lib/
 ‖  ‖——raylib/   → raylib submodule
 ‖  ‖——GUI/      → raylib GUI stuff that's not native to your app
@@ -35,16 +34,16 @@ What your project architecture should ideally look like for the CMakeLists.txt I
 ```
 
 ## Build
-`mkdir build`
-`cd build` <br>
-`cmake --preset Debug` OR `cmake --preset Release` -- (configuration of cmake) <br>
-`cmake --build --preset Debug` OR `cmake --build --preset Release` -- (compilation + build of your files, only what has changed since last build)
-<br>
+```bash
+mkdir build
+cd build
+cmake --preset Debug OR Release : (configuration)
+cmake --build --preset Debug OR Release -- (compilation + build of your files, only what has changed since last build)
+```
 
 *Check out ![CMakePresets.json](CMakePresets.json) if you're confused* <br>
 
 Executable will appear in `build/` under preset name
-<br>
 
 ### Linux Dependencies
 Raylib requires a lot of libraries that are built-in on Mac and Windows. <br>
@@ -63,7 +62,7 @@ sudo apt install \
 ```
 
 ## Add New Source Files
-Put any new `.cpp` or `.c` files in `src/` <br>
+Put any new `.cpp` files in `App/src/` <br>
 Update App/CMakeLists.txt as needed, example:
 ```cmake
 add_executable(YourProjectName
