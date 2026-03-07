@@ -6,15 +6,15 @@
 #include "GameLayer.h"
 #include "Game.h"
 
-MenuLayer::MenuLayer() : Layer("MenuLayer") {
+MenuLayer::MenuLayer() : Layer("MenuLayer"),
+      m_startButton({320, 250}, {22, 14}, "Start the Game", PINK, DARKGRAY, 22)
+{
    Image bg = LoadImage("assets/background.jpg");
    if(bg.data != nullptr) {
       ImageResize(&bg, GetScreenWidth(), GetScreenHeight());
       m_backgroundTexture = LoadTextureFromImage(bg);
       UnloadImage(bg);
    }
-
-   m_startButton = Button({ 320, 250 }, { 22, 14 }, "Start the Game", 22, PINK, DARKGRAY);
 }
 
 MenuLayer::~MenuLayer() {
