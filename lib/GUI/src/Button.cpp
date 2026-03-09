@@ -131,6 +131,11 @@ Button::Button (
 #pragma endregion
 
 #pragma region Setters
+void Button::setIcon(Texture2D icon) {
+   this->icon = icon;
+   m_bounds.width += icon.width*ICON_PAD_MULTIPLIER;
+}
+
 void Button::setIcon(const char* filepath, Vector2 dimensions) { // dimensions = {0, 0} as default args
    Image img = LoadImage(filepath);
    if(!dimensions.x || !dimensions.y) {// any are 0
@@ -162,7 +167,7 @@ void Button::setPadding(Vector2 horizPadding, Vector2 vertPadding) {
 
    Vector2 size = MeasureTextEx(font, text.c_str(), fontSize, 1);
    if(IsTextureValid(icon))
-      size = {size.x + icon.width*1.5f, std::max(size.y, static_cast<float>(icon.height))};
+      size = {size.x + icon.width*ICON_PAD_MULTIPLIER, std::max(size.y, static_cast<float>(icon.height))};
 
    m_bounds.width = size.x + horizPadding.x + horizPadding.y;
    m_bounds.height = size.y + vertPadding.x + vertPadding.y;
