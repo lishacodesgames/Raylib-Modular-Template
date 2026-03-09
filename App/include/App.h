@@ -1,8 +1,8 @@
 #pragma once
-#include <LayerStack.h>
 #include <raylib.h>
-#include <Layer.h>
-#include <Event.h>
+#include "LayerStack.h"
+#include "Layer.h"
+#include "Event.h"
 
 /// Singleton class that manages the game loop and all game states (menu, gameplay, pause, etc.) 
 class App {
