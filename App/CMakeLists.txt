@@ -1,10 +1,10 @@
 add_executable(${PROJECT_NAME})
 target_sources(${PROJECT_NAME} PRIVATE
    # list .cpp files here as they are added
-   src/Game.cpp
-   src/GameLayer.cpp
+   src/Layers/GameLayer.cpp
+   src/Layers/MenuLayer.cpp
+   src/App.cpp
    src/main.cpp
-   src/MenuLayer.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE GUI Layers raylib)

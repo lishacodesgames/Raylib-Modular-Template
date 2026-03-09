@@ -1,13 +1,13 @@
 #include <Precompiled.h>
-#include "GameLayer.h"
+#include "Layers/GameLayer.h"
 
 #include <raylib.h>
 #include <Layer.h>
 #include <cstdio>
-#include "MenuLayer.h"
-#include "Game.h"
+#include "Layers/MenuLayer.h"
+#include "App.h"
 
-GameLayer::GameLayer() : Layer("GameLayer") {}
+GameLayer::GameLayer() : Layer("Game Layer") {}
 
 void GameLayer::OnAttach() {
    SetMouseCursor(MOUSE_CURSOR_DEFAULT);
@@ -29,7 +29,7 @@ void GameLayer::OnEvent(Event& e) {
    if(e.GetEventType() == EventType::KeyPressed) {
       char key = static_cast<KeyPressedEvent&>(e).key;
       if(key == 'q' || key == 'Q') {
-         Game::Get().QueueLayerSwap(this, new MenuLayer());
+         App::Get().QueueLayerSwap(this, new MenuLayer());
          e.Handled = true;
       }
    }

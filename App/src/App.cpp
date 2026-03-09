@@ -1,11 +1,11 @@
 #include <Precompiled.h>
-#include "Game.h"
+#include "App.h"
 
 #include <raylib.h>
-#include "MenuLayer.h"
+#include "Layers/MenuLayer.h"
 
-Game* Game::s_instance = nullptr; // assign memory before assigning "this" ptr to it
-Game::Game() {
+App* App::s_instance = nullptr; // assign memory before assigning "this" ptr to it
+App::App() {
    s_instance = this;
 
    InitWindow(800, 600, "Architectured Raylib Template");
@@ -14,21 +14,21 @@ Game::Game() {
    PushLayer(new MenuLayer());
 }
 
-Game::~Game() { 
+App::~App() { 
    m_layerStack.Delete();
    CloseWindow(); 
 }
 
-Game& Game::Get() { return *s_instance; }
+App& App::Get() { return *s_instance; }
 
-void Game::PushLayer(Layer* layer) { m_layerStack.PushLayer(layer); }
+void App::PushLayer(Layer* layer) { m_layerStack.PushLayer(layer); }
 
-void Game::QueueLayerSwap(Layer* pop_layer, Layer* push_layer) {
+void App::QueueLayerSwap(Layer* pop_layer, Layer* push_layer) {
    m_pendingPop = pop_layer;
    m_pendingPush = push_layer;
 }
 
-void Game::OnEvent(Event& e) {
+void App::OnEvent(Event& e) {
    // TOPMOST (last) layer must get the event FIRST
    for(auto it = m_layerStack.rbegin(); it != m_layerStack.rend(); ++it) {
       (*it)->OnEvent(e);
@@ -37,7 +37,7 @@ void Game::OnEvent(Event& e) {
    }
 }
 
-void Game::Run() {
+void App::Run() {
    while(!WindowShouldClose()) {
       // 1. apply pending layer changes at the end of the current frame, to avoid mid-frame changes that could cause bugs
       if(m_pendingPop) {
