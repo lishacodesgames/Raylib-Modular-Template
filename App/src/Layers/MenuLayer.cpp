@@ -39,7 +39,7 @@ void MenuLayer::OnUpdate() {
 void MenuLayer::OnEvent(Event &e) {
    if(e.GetEventType() == EventType::MouseClicked) {
       if(m_startButton.isHovered) {
-         App::Get().QueueLayerSwap(this, new GameLayer());
+         App::QueueLayerSwap(this, new GameLayer());
          e.Handled = true;
       }
    }
