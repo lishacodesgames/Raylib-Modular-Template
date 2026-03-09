@@ -7,10 +7,10 @@
 #include "Game.h"
 
 MenuLayer::MenuLayer() : Layer("MenuLayer"),
-      m_startButton({320, 250}, {22, 14}, "Start the Game", PINK, DARKGRAY, 22)
+      m_startButton({320, 250}, {22, 14}, nullptr, "Start the Game", PINK, DARKGRAY, 22)
 {
    Image bg = LoadImage("assets/background.jpg");
-   if(bg.data != nullptr) {
+   if(bg.data) {
       ImageResize(&bg, GetScreenWidth(), GetScreenHeight());
       m_backgroundTexture = LoadTextureFromImage(bg);
       UnloadImage(bg);
@@ -34,16 +34,15 @@ void MenuLayer::OnDetach() {
 void MenuLayer::OnUpdate() {
    m_startButton.Update();
 
-   if(m_startButton.isHovered) {
+   if(m_startButton.isHovered)
       SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
-   }
    else 
       SetMouseCursor(MOUSE_CURSOR_DEFAULT);
 }
 
 void MenuLayer::OnEvent(Event &e) {
    if(e.GetEventType() == EventType::MouseClicked) {
-      if(m_startButton.isClicked()) {
+      if(m_startButton.isHovered) {
          Game::Get().QueueLayerSwap(this, new GameLayer());
          e.Handled = true;
       }
