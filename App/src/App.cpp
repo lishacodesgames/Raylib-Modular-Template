@@ -1,32 +1,45 @@
 #include <Precompiled.h>
 #include "App.h"
 
+#include <algorithm>
+#include <typeinfo>
 #include <raylib.h>
+#include <cstdio>
 #include "Layers/MenuLayer.h"
 
 App* App::s_instance = nullptr; // assign memory before assigning "this" ptr to it
 App::App() {
+   TraceLog(LOG_INFO, "LISHA SAYS: Loading App...");
    s_instance = this;
 
-   InitWindow(800, 600, "Architectured Raylib Template");
+   InitWindow(800, 600, "Number Match");
    SetTargetFPS(60);
 
-   PushLayer(new MenuLayer());
+   // add any other app-specific initialisation here
+   QueueLayerPush(new MenuLayer());
 }
 
 App::~App() { 
-   m_layerStack.Delete();
+   m_layerStack.Delete(); /// Must be done before CloseWindow()
    CloseWindow(); 
+   printf("LISHA SAYS: GOODBYE!\n");
 }
-
 App& App::Get() { return *s_instance; }
 
-void App::PushLayer(Layer* layer) { m_layerStack.PushLayer(layer); }
-
-void App::QueueLayerSwap(Layer* pop_layer, Layer* push_layer) {
-   m_pendingPop = pop_layer;
-   m_pendingPush = push_layer;
+void App::QueueLayerSwap(Layer* pop, Layer* push) {
+   QueueLayerPop(pop);
+   QueueLayerPush(push);
 }
+
+void App::QueueLayerPush(Layer* layer) {
+  for (auto* existing : m_layerStack) {
+    if (typeid(*existing) == typeid(*layer))  // duplicate layers
+      QueueLayerPop(existing);
+  }
+
+  m_pendingPushes.push_back(layer);
+}
+void App::QueueLayerPop(Layer* layer) { m_pendingPops.push_back(layer); }
 
 void App::OnEvent(Event& e) {
    // TOPMOST (last) layer must get the event FIRST
@@ -38,19 +51,29 @@ void App::OnEvent(Event& e) {
 }
 
 void App::Run() {
-   while(!WindowShouldClose()) {
-      // 1. apply pending layer changes at the end of the current frame, to avoid mid-frame changes that could cause bugs
-      if(m_pendingPop) {
-         m_layerStack.PopLayer(m_pendingPop);
-         delete m_pendingPop; // free memory of popped layer
-         m_pendingPop = nullptr;
-      }
-      if(m_pendingPush) {
-         m_layerStack.PushLayer(m_pendingPush);
-         m_pendingPush = nullptr;
-      }
+   TraceLog(LOG_INFO, "LISHA SAYS: Working Directory: %s", GetWorkingDirectory());
 
+   while(!WindowShouldClose()) {
+      // ---------------------------
+      // 1. apply pending layer changes at the start of the current frame
+      // to avoid mid-frame changes that could cause bugs
+      // ---------------------------
+      for(Layer* layer : m_pendingPops) {
+         layer->isOverlay? m_layerStack.PopOverlay(layer) : m_layerStack.PopLayer(layer);
+         delete layer; // free memory of popped layer
+         layer = nullptr;
+      }
+      m_pendingPops.clear();
+
+      for(Layer* layer : m_pendingPushes) {
+         layer->isOverlay? m_layerStack.PushOverlay(layer): m_layerStack.PushLayer(layer);
+         layer = nullptr;
+      }
+      m_pendingPushes.clear();
+
+      // ---------------------------
       // 2. generate events
+      // ---------------------------
       
       // key event
       int key = GetKeyPressed();
@@ -62,18 +85,26 @@ void App::Run() {
 
       // mouse event
       if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-         MouseClickedEvent e(MOUSE_LEFT_BUTTON);
+         MouseClickedEvent e(true);
          OnEvent(e);
       }
 
-      // 3. update logic: bottom layer -> top layer, so that top layers can override logic of lower layers 
+      // ---------------------------
+      // 3. update logic: bottom layer -> top layer
+      // so that top layers can override logic of lower layers 
       // (eg. pause menu can override gameplay input)
+      // ---------------------------
+      
       for(Layer* layer : m_layerStack)
          layer->OnUpdate();
       
-      // 4. render: bottom layer -> top layer, so that top layers render on top of lower layers
+      // ---------------------------
+      // 4. render: bottom layer -> top layer
+      // so that top layers render on top of lower layers
+      // ---------------------------
+      
       BeginDrawing();
-      ClearBackground(Color{213, 255, 255, 255});
+      ClearBackground(RAYWHITE);
 
       for(Layer* layer : m_layerStack)
          layer->OnRender();

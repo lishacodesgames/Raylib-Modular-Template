@@ -7,7 +7,7 @@
 #include "Layer.h"
 #include "App.h"
 
-GameLayer::GameLayer() : Layer("Game Layer") {}
+GameLayer::GameLayer() : Layer("Game Layer", false) {}
 
 void GameLayer::OnAttach() {
    SetMouseCursor(MOUSE_CURSOR_DEFAULT);

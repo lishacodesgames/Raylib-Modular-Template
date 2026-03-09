@@ -1,18 +1,11 @@
 #include <Precompiled.h>
+#include <raylib.h>
 #include "Layer.h"
 
-Layer::Layer(const std::string& name) : m_name(name) {}
+Layer::Layer(const std::string& name, bool isOverlay) : m_name(name), isOverlay(isOverlay) {}
 
-bool Layer::isSuspended() const { return m_isSuspended; }
+void Layer::OnAttach() { TraceLog(LOG_INFO, "LISHA SAYS: %s ATTACHED", m_name.c_str()); }
+void Layer::OnDetach() { TraceLog(LOG_INFO, "LISHA SAYS: %s DETACHED", m_name.c_str()); }
 
-void Layer::setSuspended(bool state) {
-   if(m_isSuspended == state)
-      return; // don't call suspension methods if state didn't change
-
-   m_isSuspended = state;
-
-   if(m_isSuspended)
-      OnSuspend();
-   else
-      OnResume();
-}
+void Layer::OnSuspend() { TraceLog(LOG_INFO, "LISHA SAYS: %s SUSPENDED", m_name.c_str()); }
+void Layer::OnResume() { TraceLog(LOG_INFO, "LISHA SAYS: %s RESUMED", m_name.c_str()); }

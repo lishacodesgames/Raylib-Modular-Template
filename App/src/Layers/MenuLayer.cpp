@@ -6,7 +6,7 @@
 #include "Layers/GameLayer.h"
 #include "App.h"
 
-MenuLayer::MenuLayer() : Layer("Menu Layer"),
+MenuLayer::MenuLayer() : Layer("Menu Layer", false),
       m_startButton({320, 250}, {22, 14}, nullptr, "Start the Game", PINK, DARKGRAY, 22)
 {
    Image bg = LoadImage("assets/background.jpg");
