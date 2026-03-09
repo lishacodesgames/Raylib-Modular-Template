@@ -32,14 +32,22 @@ void App::QueueLayerSwap(Layer* pop, Layer* push) {
 }
 
 void App::QueueLayerPush(Layer* layer) {
-  for (auto* existing : m_layerStack) {
-    if (typeid(*existing) == typeid(*layer))  // duplicate layers
-      QueueLayerPop(existing);
-  }
+   for (Layer* existing : m_layerStack) {
+      if (typeid(*existing) == typeid(*layer))  // duplicate layers
+         QueueLayerPop(existing);
+   }
 
-  m_pendingPushes.push_back(layer);
+   m_pendingPushes.push_back(layer);
 }
 void App::QueueLayerPop(Layer* layer) { m_pendingPops.push_back(layer); }
+
+Layer* App::GetLayerByName(const std::string& name) {
+   for(Layer* layer : m_layerStack)
+      if(layer->GetName() == name)
+         return layer;
+
+   return nullptr;
+}
 
 void App::OnEvent(Event& e) {
    // TOPMOST (last) layer must get the event FIRST

@@ -7,22 +7,17 @@
 #include "Layer.h"
 #include "App.h"
 
-GameLayer::GameLayer() : Layer("Game Layer", false) {}
-
+GameLayer::GameLayer() : Layer("Game Layer") {}
 void GameLayer::OnAttach() {
    SetMouseCursor(MOUSE_CURSOR_DEFAULT);
-   printf("Game Layer attached\n");
-}
-
-void GameLayer::OnDetach() {
-   printf("Game Layer detached\n");
+   Layer::OnAttach();
 }
 
 void GameLayer::OnUpdate() {
-  if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) x += 4;
-  if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) x -= 4;
-  if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) y -= 4;
-  if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) y += 4;
+   if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) x += 4;
+   if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) x -= 4;
+   if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) y -= 4;
+   if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) y += 4;
 }
 
 void GameLayer::OnEvent(Event& e) {

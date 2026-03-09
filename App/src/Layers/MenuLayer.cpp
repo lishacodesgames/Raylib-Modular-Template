@@ -6,7 +6,7 @@
 #include "Layers/GameLayer.h"
 #include "App.h"
 
-MenuLayer::MenuLayer() : Layer("Menu Layer", false),
+MenuLayer::MenuLayer() : Layer("Menu Layer"),
       m_startButton({320, 250}, {22, 14}, nullptr, "Start the Game", PINK, DARKGRAY, 22)
 {
    Image bg = LoadImage("assets/background.jpg");
@@ -24,11 +24,7 @@ MenuLayer::~MenuLayer() {
 
 void MenuLayer::OnAttach() {
    SetMouseCursor(MOUSE_CURSOR_DEFAULT);
-   printf("Menu Layer attached\n");
-}
-
-void MenuLayer::OnDetach() {
-   printf("Menu Layer detached\n");
+   Layer::OnAttach();
 }
 
 void MenuLayer::OnUpdate() {
