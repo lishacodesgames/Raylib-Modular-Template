@@ -1,13 +1,13 @@
-#include <Precompiled.h>
+#include <pch/Precompiled.h>
 #include "Layers/MenuLayer.h"
 
 #include <raylib.h>
-#include <cstdio>
 #include "Layers/GameLayer.h"
+#include "GUI/Button.h"
 #include "App.h"
 
 MenuLayer::MenuLayer() : Layer("Menu Layer"),
-      m_startButton({320, 250}, {22, 14}, nullptr, "Start the Game", PINK, DARKGRAY, 22)
+      m_startButton({320, 250}, {22, 14}, "Start the Game", PINK, DARKGRAY, 22)
 {
    Image bg = LoadImage("assets/background.jpg");
    if(bg.data) {

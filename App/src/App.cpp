@@ -1,4 +1,4 @@
-#include <Precompiled.h>
+#include <pch/Precompiled.h>
 #include "App.h"
 
 #include <algorithm>
@@ -6,9 +6,6 @@
 #include <raylib.h>
 #include <cstdio>
 #include "Layers/MenuLayer.h"
-
-Font App::font_semibold = GetFontDefault(); // font must be loaded after InitWindow()
-Font App::font_black = GetFontDefault();
 
 App* App::s_instance = nullptr;
 

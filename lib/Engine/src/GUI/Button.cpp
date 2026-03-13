@@ -1,5 +1,5 @@
-#include <Precompiled.h>
-#include "Button.h"
+#include <pch/Precompiled.h>
+#include "GUI/Button.h"
 
 #include <algorithm>
 #include <raymath.h>
@@ -46,8 +46,8 @@ void Button::Draw() {
    bool iconExists = IsTextureValid(icon);
    Vector2 textSize = MeasureTextEx(font, text.c_str(), fontSize, 1);
 
-   float iconSpace = iconExists ? icon.width*ICON_PAD_MULTIPLIER : 0;
-   float contentWidth = iconExists ? textSize.x + iconSpace : textSize.x;
+   float iconSpace = icon.width * (iconExists && !text.empty()? ICON_PAD_MULTIPLIER : 1);
+   float contentWidth = textSize.x + iconSpace;
 
    // center X
    float remSpaceX = m_bounds.width - m_horizontalPadding.x - m_horizontalPadding.y - contentWidth;
@@ -78,7 +78,7 @@ Button::~Button() {
 
 Button::Button(
    Rectangle exactBounds, 
-   Texture2D* icon, const char* text, 
+   const char* text, 
    Color buttonColor, Color contentColor,
    int fontSize, std::pair<float, int> roundness, // default args
    Font font
@@ -89,26 +89,18 @@ Button::Button(
    float x = (m_bounds.width - textSize.x)/2;
    float y = (m_bounds.height - textSize.y)/2;
    
-   if(icon) {
-      this->icon = *icon;
-      x -= (this->icon.width*ICON_PAD_MULTIPLIER)/2;
-   }
-   
    m_horizontalPadding = { x, x };
    m_verticalPadding = { y,  y };
 }
 
 Button::Button(
    Vector2 origin, Vector2 padding, 
-   Texture2D* icon, const char* text, 
+   const char* text, 
    Color buttonColor, Color contentColor,
    int fontSize, std::pair<float, int> roundness, // default args
    Font font
 ) : roundness(roundness),text(text), fontSize(fontSize), buttonColor(buttonColor), contentColor(contentColor), font(font)
-{ 
-   if(icon)
-      this->icon = *icon;
-
+{
    setOrigin(origin);
    setPadding({padding.x, padding.x}, {padding.y, padding.y});
 }
@@ -116,24 +108,21 @@ Button::Button(
 Button::Button (
    Vector2 origin, 
    float paddingLeft, float paddingRight, float paddingTop, float paddingBottom, 
-   Texture2D* icon, const char* text, 
+   const char* text, 
    Color buttonColor, Color contentColor,
    int fontSize, std::pair<float, int> roundness, // default args
    Font font
 ) : roundness(roundness), text(text), fontSize(fontSize), buttonColor(buttonColor), contentColor(contentColor), font(font)
-{ 
-   if(icon)
-      this->icon = *icon;   
-
+{
    setOrigin(origin);
    setPadding({paddingLeft, paddingRight}, {paddingTop, paddingBottom}); 
 }
 #pragma endregion
 
 #pragma region Setters
-void Button::setIcon(Texture2D icon) {
+void Button::setIcon(Texture icon) {
    this->icon = icon;
-   m_bounds.width += icon.width*ICON_PAD_MULTIPLIER;
+   setPadding(m_horizontalPadding, m_verticalPadding);
 }
 
 void Button::setIcon(const char* filepath, Vector2 dimensions) { // dimensions = {0, 0} as default args
@@ -146,7 +135,12 @@ void Button::setIcon(const char* filepath, Vector2 dimensions) { // dimensions =
    this->icon = LoadTextureFromImage(img);
    UnloadImage(img);
 
-   m_bounds.width += icon.width*ICON_PAD_MULTIPLIER;
+   setPadding(m_horizontalPadding, m_verticalPadding);
+}
+
+void Button::setOrigin(int x, int y) {
+   m_bounds.x = static_cast<float>(x);
+   m_bounds.y = static_cast<float>(y);
 }
 
 void Button::setOrigin(Vector2 origin) {
@@ -166,8 +160,10 @@ void Button::setPadding(Vector2 horizPadding, Vector2 vertPadding) {
    this->m_verticalPadding = vertPadding;
 
    Vector2 size = MeasureTextEx(font, text.c_str(), fontSize, 1);
-   if(IsTextureValid(icon))
-      size = {size.x + icon.width*ICON_PAD_MULTIPLIER, std::max(size.y, static_cast<float>(icon.height))};
+   if(IsTextureValid(icon)) {
+      size.x += icon.width * (text.empty()? 1:ICON_PAD_MULTIPLIER);
+      size.y = std::max(size.y, static_cast<float>(icon.height));
+   }
 
    m_bounds.width = size.x + horizPadding.x + horizPadding.y;
    m_bounds.height = size.y + vertPadding.x + vertPadding.y;

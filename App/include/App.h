@@ -2,9 +2,9 @@
 #include <raylib.h>
 #include <vector>
 #include <string>
-#include "LayerStack.h"
-#include "Event.h"
-#include "Layer.h"
+#include "Core/LayerStack.h"
+#include "Core/Event.h"
+#include "Core/Layer.h"
 
 /// Static class that manages the game loop and all game states (menu, gameplay, pause, etc.) 
 class App {
@@ -20,9 +20,6 @@ public:
    static void QueueLayerPop(Layer* layer);
    
    static Layer* GetLayerByName(const std::string& name);
-
-   static Font font_semibold;
-   static Font font_black;
 private:
    void OnEvent(Event& e);
 

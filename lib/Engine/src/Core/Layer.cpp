@@ -1,6 +1,5 @@
-#include <Precompiled.h>
-#include <raylib.h>
-#include "Layer.h"
+#include <pch/Precompiled.h>
+#include "Core/Layer.h"
 
 Layer::Layer(
    const std::string& name, bool isOverlay,
@@ -11,13 +10,17 @@ Layer::Layer(
 void Layer::OnAttach() { TraceLog(LOG_INFO, "LISHA SAYS: %s ATTACHED", m_name.c_str()); }
 void Layer::OnDetach() { TraceLog(LOG_INFO, "LISHA SAYS: %s DETACHED", m_name.c_str()); }
 
-void Layer::OnSuspend() {
+void Layer::OnSuspend(bool render, bool update, bool event) {
    isSuspended = true;
-   TraceLog(LOG_INFO, "LISHA SAYS: %s SUSPENDED", m_name.c_str());
+   suspended_render = render;
+   suspended_update = update;
+   suspended_event = event;
+
+   TraceLog(LOG_INFO, "LISHA SAYS: %s SUSPENDED", m_name.c_str()); 
 }
 void Layer::OnResume() {
-   isSuspended = false;
-   TraceLog(LOG_INFO, "LISHA SAYS: %s RESUMED", m_name.c_str());
+  isSuspended = false;
+  TraceLog(LOG_INFO, "LISHA SAYS: %s RESUMED", m_name.c_str());
 }
 
 const std::string& Layer::GetName() { return m_name; }
