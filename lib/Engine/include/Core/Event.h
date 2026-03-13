@@ -5,7 +5,7 @@ namespace Core {
 
    struct Event {
       bool Handled = false;
-      virtual EventType GetEventType() const = 0;
+      virtual EventType GetEventType() const;
    };
 
    struct KeyPressedEvent : Event {

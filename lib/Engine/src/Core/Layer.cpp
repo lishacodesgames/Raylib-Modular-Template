@@ -26,5 +26,5 @@ namespace Core {
       TraceLog(LISHA_SAYS, "%s RESUMED", m_name.c_str());
    }
 
-   const std::string& Layer::GetName() { return m_name; }
+   const std::string& Layer::GetName() const { return m_name; }
 }

@@ -87,7 +87,7 @@ namespace GUI {
    ) 
       : m_bounds(exactBounds), roundness(roundness), text(text), fontSize(fontSize), buttonColor(buttonColor), contentColor(contentColor), font(font)
    {
-      Vector2 textSize = MeasureTextEx(font, text, 20, 1);
+      Vector2 textSize = MeasureTextEx(font, text, fontSize, 1);
       float x = (m_bounds.width - textSize.x)/2;
       float y = (m_bounds.height - textSize.y)/2;
       

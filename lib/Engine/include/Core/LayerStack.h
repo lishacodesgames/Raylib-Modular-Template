@@ -3,11 +3,17 @@
 #include "Core/Layer.h"
 
 namespace Core {
+   /// Owns all layers currently being processed in scene
    class LayerStack {
    public:
       LayerStack() = default;
       ~LayerStack() = default;
-      void Delete(); /// Deletes all layers (must be done before Window closes or segmentation fault is thrown)
+      
+      /** @brief Deletes existing layers (in sstack)
+       * (must be done before Window closes or segmentation fault is thrown)
+       * called by App only.
+       */
+      void Delete(); 
 
       void PushLayer(Layer* layer);
       void PopLayer(Layer* layer);

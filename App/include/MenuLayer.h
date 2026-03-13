@@ -14,6 +14,6 @@ public:
    void OnEvent(Core::Event &e) override;
    void OnRender() override;
 private:
-   Texture2D m_backgroundTexture;
+   Texture2D m_backgroundTexture = {0};
    GUI::Button m_startButton;
 };

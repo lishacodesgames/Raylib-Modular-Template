@@ -17,9 +17,11 @@ namespace Core {
       );
       virtual ~Layer() = default; /// called with "delete" keyword
 
-      // ---- Pure virtual functions ----
+      // ---- Virtual functions with default implementations ----
       virtual void OnAttach(); /// called when layer is actually pushed onto layer stack
       virtual void OnDetach(); /// called when layer is actually popped from layer stack
+
+      // ---- Pure virtual functions ----
       virtual void OnEvent(Event &e) = 0; /// check-once event (key press)
       virtual void OnUpdate() = 0; /// called every frame (key hold)
       virtual void OnRender() = 0;
@@ -33,7 +35,7 @@ namespace Core {
       bool suspended_render = false;
 
       // ---- Getters ----
-      const std::string& GetName();
+      const std::string& GetName() const;
 
    protected:
       // ---- Protected Members ----

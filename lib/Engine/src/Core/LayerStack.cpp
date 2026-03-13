@@ -44,8 +44,8 @@ namespace Core {
    bool LayerStack::empty() const { return m_layers.empty(); }
 
    void LayerStack::Delete() {
-      for(int i = 0; i < m_layers.size(); i++)
-         delete m_layers[i];
+      for(Layer* layer : m_layers)
+         delete layer;
          
       m_layers.clear();
       m_layerInsertIndex = 0;
