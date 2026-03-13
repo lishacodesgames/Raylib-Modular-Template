@@ -1,4 +1,5 @@
 #include <pch/Precompiled.h>
+#include "Core/Logging.h"
 #include "Core/Layer.h"
 
 Layer::Layer(
@@ -7,8 +8,8 @@ Layer::Layer(
 ) : m_name(name), isOverlay(isOverlay), suspended_render(suspended_render), suspended_update(suspended_update), suspended_event(suspended_event)
 {}
 
-void Layer::OnAttach() { TraceLog(LOG_INFO, "LISHA SAYS: %s ATTACHED", m_name.c_str()); }
-void Layer::OnDetach() { TraceLog(LOG_INFO, "LISHA SAYS: %s DETACHED", m_name.c_str()); }
+void Layer::OnAttach() { TraceLog(LISHA_SAYS, "%s ATTACHED", m_name.c_str()); }
+void Layer::OnDetach() { TraceLog(LISHA_SAYS, "%s DETACHED", m_name.c_str()); }
 
 void Layer::OnSuspend(bool render, bool update, bool event) {
    isSuspended = true;
@@ -16,11 +17,11 @@ void Layer::OnSuspend(bool render, bool update, bool event) {
    suspended_update = update;
    suspended_event = event;
 
-   TraceLog(LOG_INFO, "LISHA SAYS: %s SUSPENDED", m_name.c_str()); 
+   TraceLog(LISHA_SAYS, "%s SUSPENDED", m_name.c_str()); 
 }
 void Layer::OnResume() {
   isSuspended = false;
-  TraceLog(LOG_INFO, "LISHA SAYS: %s RESUMED", m_name.c_str());
+  TraceLog(LISHA_SAYS, "%s RESUMED", m_name.c_str());
 }
 
 const std::string& Layer::GetName() { return m_name; }

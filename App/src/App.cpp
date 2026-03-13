@@ -6,26 +6,27 @@
 #include <raylib.h>
 #include <cstdio>
 #include "Layers/MenuLayer.h"
+#include "Core/Logging.h"
 
 App* App::s_instance = nullptr;
 
 App::App(const std::string& name) {
    s_instance = this;
 
-   TraceLog(LOG_INFO, "LISHA SAYS: Loading App...");
+   TraceLog(LISHA_SAYS, "Loading App...");
 
    InitWindow(800, 600, name.c_str());
    SetTargetFPS(60);
 
    m_layerStack.PushLayer(new MenuLayer());
-   TraceLog(LOG_INFO, "LISHA SAYS: App Loaded!");
+   TraceLog(LISHA_SAYS, "App Loaded!");
 }
 
 App::~App() { 
    m_layerStack.Delete(); /// Must be done before CloseWindow()
    CloseWindow();
    s_instance = nullptr;
-   printf("LISHA SAYS: GOODBYE!\n");
+   TraceLog(LISHA_SAYS, "GOODBYE!\n");
 }
 
 void App::QueueLayerSwap(Layer* pop, Layer* push) {
@@ -60,7 +61,7 @@ void App::OnEvent(Event& e) {
 }
 
 void App::Run() {
-   TraceLog(LOG_INFO, "LISHA SAYS: Working Directory: %s", GetWorkingDirectory());
+   TraceLog(LISHA_SAYS, "Working Directory: %s", GetWorkingDirectory());
 
    while(!WindowShouldClose()) {
       // ---------------------------

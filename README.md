@@ -5,7 +5,7 @@ This repository is intended to be used as a starting point for a new raylib proj
 This library-based system is for those who want a distinct separation between the core app, external libraries, and gui code. <br>
 This can be used as-is (like I do) or any subdirectories can be added or removed as needed
 
-*I also have a simpler, non-lib-based, template: ![check it out](https://github.com/lishacodesgames/Raylib-Template)*
+*I also have a simpler, non-lib-based, template: [check it out](https://github.com/lishacodesgames/Raylib-Template)*
 
 ## How to Clone
 `git clone --recursive` to get the raylib submodule local
@@ -23,15 +23,19 @@ What your project architecture should ideally look like for the CMakeLists.txt I
 ‖——App/
 ‖  ‖——CMakeLists.txt
 ‖  ‖——include/
-‖  ‖  ‖——*.h → all *your* header files
+‖     ‖——*.h    → all *your* header files
 ‖  ‖——src/
-‖  ‖  ‖——main.cpp
-‖  ‖  ‖——*.cpp → all *your* source files
+‖     ‖——main.cpp
+‖     ‖——*.cpp  → all *your* source files
+‖
 ‖——lib/
 ‖  ‖——raylib/   → raylib submodule
-‖  ‖——GUI/      → raylib GUI stuff that's not native to your app
-‖  ‖——Layers/   → Layering system similar to the Hazel Game engine (wayyy simpler, but a good starting point for transitions)
+‖  ‖——Engine/   → my own (extremely simple) implementation
+‖     ‖——GUI/   → raylib GUI stuff that's not native to your app
+‖     ‖——Core/  → veryy simple Layering and Logging system
 ```
+
+I would love some feedback and suggestions for the Engine!
 
 ## Build
 ```bash
