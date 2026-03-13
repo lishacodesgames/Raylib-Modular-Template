@@ -13,6 +13,18 @@ This can be used as-is (like I do) or any subdirectories can be added or removed
 **If you forgot, do:** <br>
 `git submodule update --init --recursive` after regular `git clone`
 
+### Build
+```bash
+mkdir build
+cd build
+cmake --preset Debug OR Release : (configuration, only needs to be done when CMakeLists.txt has changed)
+cmake --build --preset Debug OR Release
+```
+
+*Check out [CMakePresets.json](CMakePresets.json) if you're confused* <br>
+
+Executable will appear in `build/` under preset name
+
 ## Project Structure
 What your project architecture should ideally look like for the CMakeLists.txt I've included (Can change accordingly, otherwise)
 ```
@@ -36,18 +48,6 @@ What your project architecture should ideally look like for the CMakeLists.txt I
 ```
 
 I would love some feedback and suggestions for the Engine!
-
-## Build
-```bash
-mkdir build
-cd build
-cmake --preset Debug OR Release : (configuration)
-cmake --build --preset Debug OR Release -- (compilation + build of your files, only what has changed since last build)
-```
-
-*Check out ![CMakePresets.json](CMakePresets.json) if you're confused* <br>
-
-Executable will appear in `build/` under preset name
 
 ### Linux Dependencies
 Raylib requires a lot of libraries that are built-in on Mac and Windows. <br>
