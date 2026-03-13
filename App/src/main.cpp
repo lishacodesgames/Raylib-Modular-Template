@@ -8,7 +8,7 @@
 #endif
 
 int main() {
-   SetTraceLogCallback(LishaLogger);
+   SetTraceLogCallback(Core::LishaLogger);
    SetTraceLogLevel(LOG_LEVEL);
 
    App game("Raylib Modular Template Example Game");

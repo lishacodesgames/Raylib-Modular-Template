@@ -1,8 +1,8 @@
 add_executable(${PROJECT_NAME})
 target_sources(${PROJECT_NAME} PRIVATE
    # list .cpp files here as they are added
-   src/Layers/GameLayer.cpp
-   src/Layers/MenuLayer.cpp
+   src/GameLayer.cpp
+   src/MenuLayer.cpp
    src/App.cpp
    src/main.cpp
 )

@@ -1,12 +1,12 @@
 #include <pch/Precompiled.h>
-#include "Layers/MenuLayer.h"
+#include "MenuLayer.h"
 
 #include <raylib.h>
-#include "Layers/GameLayer.h"
 #include "GUI/Button.h"
+#include "GameLayer.h"
 #include "App.h"
 
-MenuLayer::MenuLayer() : Layer("Menu Layer"),
+MenuLayer::MenuLayer() : Core::Layer("Menu Layer"),
       m_startButton({320, 250}, {22, 14}, "Start the Game", PINK, DARKGRAY, 22)
 {
    Image bg = LoadImage("assets/background.jpg");
@@ -24,7 +24,7 @@ MenuLayer::~MenuLayer() {
 
 void MenuLayer::OnAttach() {
    SetMouseCursor(MOUSE_CURSOR_DEFAULT);
-   Layer::OnAttach();
+   Core::Layer::OnAttach();
 }
 
 void MenuLayer::OnUpdate() {
@@ -36,8 +36,8 @@ void MenuLayer::OnUpdate() {
       SetMouseCursor(MOUSE_CURSOR_DEFAULT);
 }
 
-void MenuLayer::OnEvent(Event &e) {
-   if(e.GetEventType() == EventType::MouseClicked) {
+void MenuLayer::OnEvent(Core::Event &e) {
+   if(e.GetEventType() == Core::EventType::MouseClicked) {
       if(m_startButton.isHovered) {
          App::QueueLayerSwap(this, new GameLayer());
          e.Handled = true;
