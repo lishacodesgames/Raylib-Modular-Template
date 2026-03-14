@@ -10,7 +10,7 @@ namespace GUI {
 
    static constexpr float ICON_PAD_MULTIPLIER = 1.5f;
 
-   #pragma region Methods
+#pragma region Methods
    void Button::Update() {
    // update hover flag
       if (CheckCollisionPointRec(GetMousePosition(), m_bounds))
@@ -70,9 +70,9 @@ namespace GUI {
       DrawTextEx(font, text.c_str(), {originX + iconSpace, textOriginY}, fontSize, 1, contentColor);
    }
 
-   #pragma endregion
+#pragma endregion
 
-   #pragma region Constructors
+#pragma region Constructors
    Button::~Button() {
       if(IsTextureValid(icon))
          UnloadTexture(icon);
@@ -119,9 +119,9 @@ namespace GUI {
       setOrigin(origin);
       setPadding({paddingLeft, paddingRight}, {paddingTop, paddingBottom}); 
    }
-   #pragma endregion
+#pragma endregion
 
-   #pragma region Setters
+#pragma region Setters
    void Button::setIcon(Texture icon) {
       this->icon = icon;
       setPadding(m_horizontalPadding, m_verticalPadding);
@@ -176,15 +176,15 @@ namespace GUI {
       this->buttonColor = buttonColor;
       this->contentColor = contentColor;
    }
-   #pragma endregion
+#pragma endregion
 
-   #pragma region Getters
+#pragma region Getters
 
    Vector2 Button::getOrigin() const { return {m_bounds.x, m_bounds.y}; }
    Vector2 Button::getSize() const { return {m_bounds.width, m_bounds.height}; }
    Rectangle Button::getBounds() const { return m_bounds; }
 
-   #pragma endregion
+#pragma endregion
 } // namespace GUI
 
 #pragma region Operators

@@ -18,9 +18,10 @@ namespace GUI {
     */
    class Button {
    public:
-      // ----------------
+      // -----------------
       // ---- METHODS ----
-      // ----------------
+      // -----------------
+
       void Update();
       void Draw();
 
@@ -49,7 +50,7 @@ namespace GUI {
          Font font = GetFontDefault()
       );
 
-      // Custom padding
+      /// Custom padding
       Button(
          Vector2 origin,
          float paddingLeft, float paddingRight, float paddingTop, float paddingBottom,

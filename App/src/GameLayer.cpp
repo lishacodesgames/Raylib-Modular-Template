@@ -2,7 +2,6 @@
 #include "GameLayer.h"
 
 #include <raylib.h>
-#include <cstdio>
 #include "Core/Layer.h"
 #include "MenuLayer.h"
 #include "App.h"

@@ -21,6 +21,7 @@ namespace Core {
 
       TraceLog(LISHA_SAYS, "%s SUSPENDED", m_name.c_str()); 
    }
+   
    void Layer::OnResume() {
       isSuspended = false;
       TraceLog(LISHA_SAYS, "%s RESUMED", m_name.c_str());
