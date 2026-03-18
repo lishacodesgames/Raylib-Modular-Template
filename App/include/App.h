@@ -14,7 +14,6 @@ public:
    ~App();
    
    void Run();
-   void OnEvent(Core::Event& e);
    
    static void QueueLayerSwap(Core::Layer* pop, Core::Layer* push);
    static void QueueLayerPush(Core::Layer* layer);
@@ -22,6 +21,8 @@ public:
    
    static Core::Layer* GetLayerByName(const std::string& name);
 private:
+   void OnEvent(Core::Event& e);
+   
    Core::LayerStack m_layerStack;
 
    // memory management for pending layer changes, to be applied at the end of the current frame

@@ -1,10 +1,6 @@
 #include <pch/Precompiled.h>
 #include "App.h"
 
-#include <algorithm>
-#include <typeinfo>
-#include <raylib.h>
-#include <cstdio>
 #include "Core/Logging.h"
 #include "MenuLayer.h"
 
@@ -23,7 +19,7 @@ App::App(const std::string& name) {
 }
 
 App::~App() { 
-   m_layerStack.Delete(); // Must be done before CloseWindow()
+   m_layerStack.Delete(); /// Must be done before CloseWindow()
    CloseWindow();
    s_instance = nullptr;
    TraceLog(LISHA_SAYS, "GOODBYE!\n");
@@ -71,6 +67,7 @@ void App::Run() {
       for(Core::Layer* layer : m_pendingPops) {
          layer->isOverlay? m_layerStack.PopOverlay(layer) : m_layerStack.PopLayer(layer);
          delete layer; // free memory of popped layer
+         layer = nullptr;
       }
       m_pendingPops.clear();
 

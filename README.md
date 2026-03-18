@@ -7,19 +7,27 @@ This can be used as-is (like I do) or any subdirectories can be added or removed
 
 *I also have a simpler, non-lib-based, template: [check it out](https://github.com/lishacodesgames/Raylib-Template)*
 
-## How to Clone
+## How to use
+
+### Clone
 `git clone --recursive` to get the raylib submodule local
 
 **If you forgot, do:** <br>
 `git submodule update --init --recursive` after regular `git clone`
 
-### Build
+### Build & Run
 ```bash
 mkdir build
 cd build
-cmake --preset Debug OR Release : (configuration, only needs to be done when CMakeLists.txt has changed)
+cmake --preset Debug OR Release
 cmake --build --preset Debug OR Release
+
+./bin/<preset>/MyGame
 ```
+**Note:** <br> 
+- for Windows, omit the `./` and add `.exe` at the end
+- Make sure you're running from the repo directory `Number-Match/`
+- Make sure you have cmake and ninja in your path variables
 
 *Check out [CMakePresets.json](CMakePresets.json) if you're confused* <br>
 
@@ -65,17 +73,7 @@ sudo apt install \
     libxkbcommon-dev
 ```
 
-## Add New Source Files
-Put any new `.cpp` files in `App/src/` <br>
-Update App/CMakeLists.txt as needed, example:
-```cmake
-add_executable(YourProjectName
-  src/main.cpp
-  src/other_file.cpp
-)
-```
-
-**Note:** I've made it so that you don't need to touch any CMakeLists.txt other than App/ as you will add your source files there. <br>
+**Note:** I've made it so that you don't need to touch any CMakeLists.txt to run <br>
 If any issues arise, lmk :)
 
 ## Updating raylib (the submodule)
@@ -89,5 +87,4 @@ git commit -m "Updated raylib submodule"
 
 ## Requirements
 * CMake 3.20+
-* C++ compiler: GCC / Clang
 * Ninja (not *required*, but it's what the presets use)
