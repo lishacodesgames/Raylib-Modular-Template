@@ -19,19 +19,17 @@ This can be used as-is (like I do) or any subdirectories can be added or removed
 ```bash
 mkdir build
 cd build
-cmake --preset Debug OR Release
-cmake --build --preset Debug OR Release
+cmake --preset Debug    # or: cmake --preset Release
+cmake --build --preset Debug    # or: cmake --build --preset Release
 
 ./bin/<preset>/MyGame
 ```
 **Note:** <br> 
 - for Windows, omit the `./` and add `.exe` at the end
-- Make sure you're running from the repo directory `Number-Match/`
+- Make sure you're running from the repo directory `YourProject/`
 - Make sure you have cmake and ninja in your path variables
 
 *Check out [CMakePresets.json](CMakePresets.json) if you're confused* <br>
-
-Executable will appear in `build/` under preset name
 
 ## Project Structure
 What your project architecture should ideally look like for the CMakeLists.txt I've included (Can change accordingly, otherwise)
