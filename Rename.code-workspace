@@ -1,0 +1,21 @@
+// optional but if using vscode, useful for organisation
+{
+	"folders": [
+		{ "path": ".", "name": "repo" },
+		{ "path": "App" },
+		{ "path": "lib" }
+	],
+	"settings": {
+		"cmake.sourceDirectory": "${workspaceFolder:repo}",
+
+		"search.exclude": {
+			"**/build/**": true,
+			"**/bin/**": true,
+			"**/obj/**": true,
+			"**/raylib/**": true
+		},
+		"C_Cpp.files.exclude": {
+			"**/raylib/**": true
+		}
+	} 
+}
