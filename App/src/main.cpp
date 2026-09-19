@@ -1,12 +1,10 @@
-#include "App.h"
+#include "Core/Application.h"
 #include "Core/Logging.h"
 
 int main() {
    SetTraceLogCallback(Core::LishaLogger);
    SetTraceLogLevel(LOG_LEVEL);
 
-   App game("Raylib Modular Template Example Game");
+   Core::Application game = Core::CreateApplication("My Game");
    game.Run();
-
-   return 0;
 }

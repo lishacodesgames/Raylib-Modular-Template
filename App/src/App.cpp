@@ -1,117 +1,26 @@
 #include <pch/Precompiled.h>
-#include "App.h"
+#include "Core/Application.h"
 
 #include "Core/Logging.h"
 #include "MenuLayer.h"
 
-App* App::s_instance = nullptr;
-
-App::App(const std::string& name) {
-   s_instance = this;
-
-   Core::ConsoleLog(LISHA_SAYS, "Loading App...");
+Core::Application Core::CreateApplication(const std::string& name) {
+   Core::Application app;
+   app.bgColor = new Color(RAYWHITE);
+   Core::ConsoleLog(LISHA_SAYS, std::format("Loading {}...", name));
 
    InitWindow(800, 600, name.c_str());
    SetTargetFPS(60);
 
-   QueueLayerPush(new MenuLayer());
-   Core::ConsoleLog(LISHA_SAYS, "App Loaded!");
+   app.m_layerStack.PushLayer(new MenuLayer());
+   Core::ConsoleLog(LISHA_SAYS, std::format("{} Loaded!", name));
+
+   return app;
 }
 
-App::~App() { 
-   m_layerStack.Delete(); /// Must be done before CloseWindow()
+void Core::DestroyApplication(Core::Application& app) {
+   app.m_layerStack.Delete();
    CloseWindow();
-   s_instance = nullptr;
+   Core::Application::s_instance = nullptr;
    Core::ConsoleLog(LISHA_SAYS, "GOODBYE!\n");
-}
-
-void App::QueueLayerSwap(Core::Layer* pop, Core::Layer* push) {
-   QueueLayerPop(pop);
-   QueueLayerPush(push);
-}
-
-void App::QueueLayerPush(Core::Layer* layer) {
-   for(Core::Layer* existing : s_instance->m_layerStack)
-      if(typeid(*existing) == typeid(*layer)) // duplicate layers
-         QueueLayerPop(existing);
-
-   s_instance->m_pendingPushes.push_back(layer);
-}
-void App::QueueLayerPop(Core::Layer* layer) { s_instance->m_pendingPops.push_back(layer); }
-
-Core::Layer* App::GetLayerByName(const std::string& name) {
-   for(Core::Layer* layer : s_instance->m_layerStack)
-      if(layer->GetName() == name)
-         return layer;
-   
-   return nullptr;
-}
-
-void App::OnEvent(Core::Event& e) {
-   // TOPMOST (last) layer must get the event FIRST
-   for(auto it = m_layerStack.rbegin(); it != m_layerStack.rend(); ++it) {
-      (*it)->OnEvent(e);
-      if(e.Handled) 
-         break; // stop propagating if event was handled
-   }
-}
-
-void App::Run() {
-   Core::ConsoleLog(LISHA_TRACE, std::format("Working Directory: {}", GetWorkingDirectory()));
-
-   while(!WindowShouldClose()) {
-      // ---------------------------
-      // 1. apply pending layer changes at the start of the current frame
-      // to avoid mid-frame changes that could cause bugs
-      // ---------------------------
-      for(Core::Layer* layer : m_pendingPops) {
-         layer->isOverlay? m_layerStack.PopOverlay(layer) : m_layerStack.PopLayer(layer);
-         delete layer; // free memory of popped layer
-      }
-      m_pendingPops.clear();
-
-      for(Core::Layer* layer : m_pendingPushes)
-         layer->isOverlay? m_layerStack.PushOverlay(layer): m_layerStack.PushLayer(layer);
-      m_pendingPushes.clear();
-
-      // ---------------------------
-      // 2. generate events
-      // ---------------------------
-      
-      // key event
-      int key = GetKeyPressed();
-      while(key != 0) {
-         Core::KeyPressedEvent e(key);
-         OnEvent(e);
-         key = GetKeyPressed();
-      }
-
-      // mouse event
-      if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-         Core::MouseClickedEvent e(true);
-         OnEvent(e);
-      }
-
-      // ---------------------------
-      // 3. update logic: bottom layer -> top layer
-      // so that top layers can override logic of lower layers 
-      // (eg. pause menu can override gameplay input)
-      // ---------------------------
-      
-      for(Core::Layer* layer : m_layerStack)
-         layer->OnUpdate();
-      
-      // ---------------------------
-      // 4. render: bottom layer -> top layer
-      // so that top layers render on top of lower layers
-      // ---------------------------
-      
-      BeginDrawing();
-      ClearBackground(RAYWHITE);
-
-      for(Core::Layer* layer : m_layerStack)
-         layer->OnRender();
-
-      EndDrawing();
-   }
 }

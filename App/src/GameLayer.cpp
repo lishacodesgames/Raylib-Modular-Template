@@ -1,10 +1,11 @@
 #include <pch/Precompiled.h>
 #include "GameLayer.h"
 
-#include <raylib.h>
+#include "Core/Application.h"
 #include "Core/Layer.h"
 #include "MenuLayer.h"
-#include "App.h"
+
+#include <raylib.h>
 
 GameLayer::GameLayer() : Layer("Game Layer") {}
 void GameLayer::OnAttach() {
@@ -23,7 +24,7 @@ void GameLayer::OnEvent(Core::Event& e) {
    if(e.GetEventType() == Core::EventType::KeyPressed) {
       char key = static_cast<Core::KeyPressedEvent&>(e).key;
       if(key == 'q' || key == 'Q') {
-         App::QueueLayerSwap(this, new MenuLayer());
+         Core::Application::QueueLayerSwap(this, new MenuLayer());
          e.Handled = true;
       }
    }

@@ -8,7 +8,7 @@ namespace Core
       Application() { s_instance = this; }
       ~Application() { DestroyApplication(*this); }
 
-      friend Application* CreateApplication(const std::string& name); /// must be defined by user
+      friend Application CreateApplication(const std::string& name); /// must be defined by user
       friend void DestroyApplication(Application& app); /// must be defined by user, must handle ALL resources owned by this application (layers, windows, etc.)
 
       void Run();
@@ -31,6 +31,6 @@ namespace Core
       void OnEvent(Core::Event& e);
    };
 
-   extern Application* CreateApplication(const std::string& name);
+   extern Application CreateApplication(const std::string& name);
    extern void DestroyApplication(Application& app);
 }

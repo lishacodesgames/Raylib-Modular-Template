@@ -1,10 +1,9 @@
 #include <pch/Precompiled.h>
 #include "MenuLayer.h"
 
-#include <raylib.h>
+#include "Core/Application.h"
 #include "GUI/Button.h"
 #include "GameLayer.h"
-#include "App.h"
 
 MenuLayer::MenuLayer() : Core::Layer("Menu Layer"),
       m_startButton({320, 250}, {22, 14}, "Start the Game", PINK, DARKGRAY, 22)
@@ -15,6 +14,8 @@ MenuLayer::MenuLayer() : Core::Layer("Menu Layer"),
       ImageResize(&bg, GetScreenWidth(), GetScreenHeight());
       m_backgroundTexture = LoadTextureFromImage(bg);
       UnloadImage(bg);
+   } else {
+      Core::ConsoleLog(LISHA_TRACE, "Failed to load background image!");
    }
 }
 
@@ -40,7 +41,7 @@ void MenuLayer::OnUpdate() {
 void MenuLayer::OnEvent(Core::Event &e) {
    if(e.GetEventType() == Core::EventType::MouseClicked) {
       if(m_startButton.isHovered) {
-         App::QueueLayerSwap(this, new GameLayer());
+         Core::Application::QueueLayerSwap(this, new GameLayer());
          e.Handled = true;
       }
    }
