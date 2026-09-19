@@ -1,20 +1,18 @@
 set(BIN ${CMAKE_SOURCE_DIR}/bin/${CMAKE_BUILD_TYPE})
 file(GLOB_RECURSE MY_SOURCES
    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp 
-   ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/*.h
 )
 
 add_executable(${PROJECT_NAME} ${MY_SOURCES})
 target_link_libraries(${PROJECT_NAME} PRIVATE Engine)
 set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${BIN})
 
-target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 # Change debug logging based on preset
 if(_DEBUGGING)
    target_compile_definitions(${PROJECT_NAME} PRIVATE _DEBUGGING=1)
-else()
-   target_compile_definitions(${PROJECT_NAME} PRIVATE _DEBUGGING=0)
 endif()
 
 # (MSVC has different warning flags)

@@ -9,20 +9,20 @@ App* App::s_instance = nullptr;
 App::App(const std::string& name) {
    s_instance = this;
 
-   TraceLog(LISHA_SAYS, "Loading App...");
+   Core::ConsoleLog(LISHA_SAYS, "Loading App...");
 
    InitWindow(800, 600, name.c_str());
    SetTargetFPS(60);
 
    QueueLayerPush(new MenuLayer());
-   TraceLog(LISHA_SAYS, "App Loaded!");
+   Core::ConsoleLog(LISHA_SAYS, "App Loaded!");
 }
 
 App::~App() { 
    m_layerStack.Delete(); /// Must be done before CloseWindow()
    CloseWindow();
    s_instance = nullptr;
-   TraceLog(LISHA_SAYS, "GOODBYE!\n");
+   Core::ConsoleLog(LISHA_SAYS, "GOODBYE!\n");
 }
 
 void App::QueueLayerSwap(Core::Layer* pop, Core::Layer* push) {
@@ -57,7 +57,7 @@ void App::OnEvent(Core::Event& e) {
 }
 
 void App::Run() {
-   TraceLog(LISHA_SAYS, "Working Directory: %s", GetWorkingDirectory());
+   Core::ConsoleLog(LISHA_TRACE, std::format("Working Directory: {}", GetWorkingDirectory()));
 
    while(!WindowShouldClose()) {
       // ---------------------------
