@@ -9,7 +9,8 @@
 MenuLayer::MenuLayer() : Core::Layer("Menu Layer"),
       m_startButton({320, 250}, {22, 14}, "Start the Game", PINK, DARKGRAY, 22)
 {
-   Image bg = LoadImage("assets/background.jpg");
+
+   Image bg = LoadImage("assets/background.jpeg");
    if(bg.data) {
       ImageResize(&bg, GetScreenWidth(), GetScreenHeight());
       m_backgroundTexture = LoadTextureFromImage(bg);
