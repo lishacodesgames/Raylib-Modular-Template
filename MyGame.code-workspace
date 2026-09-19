@@ -7,12 +7,17 @@
 	],
 	"settings": {
 		"cmake.sourceDirectory": "${workspaceFolder:repo}",
+		"terminal.integrated.cwd": "${workspaceFolder:repo}",
 
 		"search.exclude": {
 			"**/build/**": true,
 			"**/bin/**": true,
 			"**/obj/**": true,
 			"**/raylib/**": true
+		},
+		"files.exclude": {
+			"App": true,
+			"lib": true
 		},
 		"C_Cpp.files.exclude": {
 			"**/raylib/**": true
